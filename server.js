@@ -1,7 +1,7 @@
 const http = require('http');
 const express = require('express');
 const socketIO = require('socket.io');
-var path = require('path')
+var path = require('path');
 
 
 const app = express();
@@ -22,7 +22,7 @@ io.on('connection', (socket) => {
   })
   //reception d'un message et diffusion à tous les clients sauf à l'envoyeur
   socket.on('message', (message)=>{
-    socket.broadcast.emit('message', socket.pseudo + ' : ' + message);
+    socket.broadcast.emit('message', {pseudo:socket.pseudo, message:message});
   })
 });
 
