@@ -38,11 +38,44 @@ color: #fdfdfd;
     border: none;
     color: white;
     font-size: 16px;
-    
+
 }
 #button-submit{
   background-color: #b9bbbe;
   border: none;
   cursor: pointer;
   height: 45px;
+}
+@media screen and (max-width: 768px){
+  h2, h1{
+    text-align: center;
+  }
+  #container-inputs{
+    width: 100%;
+    margin-top: 20px;
+    align-items: center;
+  }
+  #container-messages{
+    background-color: #36393f;
+    width: 100%;
+    height: 768px;
+  }
+}
+@media screen and (max-width: 425px){
+  h2, h1{
+    font-size: 18px;
+  }
+  #container-inputs{
+    width: 100%;
+    margin-top: 20px;
+    align-items: center;
+  }
+  #container-messages{
+    background-color: #36393f;
+    width: 100%;
+  }
+  #container{
+    display: flex;
+    height: 100%;
+  }
 }
