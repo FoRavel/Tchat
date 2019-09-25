@@ -18,11 +18,11 @@ app.get('/', function (req, res) {
 io.on('connection', (socket) => {
   socket.on('petit_nouveau', (pseudo)=>{
     socket.pseudo = pseudo;
-    socket.broadcast.emit('petit_nouveau', pseudo+' vient de se connecter!');
+    socket.broadcast.emit('petit_nouveau', pseudo + ' vient de se connecter!');
   })
   //reception d'un message et diffusion à tous les clients sauf à l'envoyeur
   socket.on('message', (message)=>{
-    socket.broadcast.emit('message', socket.pseudo + ' : ' + msg);
+    socket.broadcast.emit('message', socket.pseudo + ' : ' + message);
   })
 });
 
