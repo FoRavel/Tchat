@@ -26,5 +26,9 @@ io.on('connection', (socket) => {
   })
 });
 
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 8000;
+}
 
-server.listen(8080);
+server.listen(port);
