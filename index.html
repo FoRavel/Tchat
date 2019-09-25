@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Socket.io</title>
+        <link rel="stylesheet" href="/css/style.css">
+        <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+
+      <div id="container">
+        <h1>Messagerie instantanée</h1>
+        <h2>HTML / CSS / PureJS / NodeJS / Socket.IO</h2>
+        <section id="container-messages">
+
+        </section>
+        <div id="container-inputs">
+          <label id="label-pseudo"></label>
+          <input type="text" id="input-message" placeholder="Écrire un message..."/>
+          <button id="button-submit">
+            <img src="/assets/send.png">
+          </button>
+        </div>
+      </div>
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            var container_messages = document.getElementById("container-messages");
+            var input_message = document.getElementById("input-message");
+            var button_submit = document.getElementById("button-submit");
+            var label_pseudo = document.getElementById("label-pseudo");
+
+
+
+            var socket = io.connect('http://localhost:8080');
+
+            var pseudo = prompt("votre pseudo?");
+            if(pseudo ==""){
+              pseudo = "Anonyme";
+            }
+            //Insertion pseudo champ de saisie
+            label_pseudo.style.paddingLeft = "20px";
+            var textNode_pseudo = document.createTextNode(pseudo + " : ");
+            label_pseudo.appendChild(textNode_pseudo);
+            var pseudoWidth = label_pseudo.offsetWidth;
+            input_message.style.paddingLeft = pseudoWidth+5+"px";
+
+            socket.emit('petit_nouveau', pseudo);
+
+            socket.on('petit_nouveau', (msg)=>{
+              var node = document.createElement("p");
+              var textNode = document.createTextNode(msg);
+              node.appendChild(textNode);
+              container_messages.appendChild(node);
+            })
+
+            socket.on('message', function(data) {
+              //pseudo
+              var node_span_pseudo = document.createElement("span");
+              let textNode_pseudo = document.createTextNode(data.pseudo+" : ");
+              node_span_pseudo.style.fontWeight = "bold";
+              node_span_pseudo.appendChild(textNode_pseudo);
+              //message
+              var node_span_message = document.createElement("span");
+              var textNode_message = document.createTextNode(data.message);
+              node_span_message.appendChild(textNode_message);
+              //Balise englobant pseudo et message
+              var node = document.createElement("p");
+              node.appendChild(node_span_pseudo);
+              node.appendChild(node_span_message);
+              container_messages.appendChild(node);
+            });
+
+
+            button_submit.addEventListener("click", function(){
+              socket.emit('message', input_message.value);
+              var node_span_pseudo = document.createElement("span");
+              let textNode_pseudo = document.createTextNode(pseudo+" : ");
+              node_span_pseudo.style.fontWeight = "bold";
+              node_span_pseudo.appendChild(textNode_pseudo);
+              //message
+              var node_span_message = document.createElement("span");
+              var textNode_message = document.createTextNode(input_message.value);
+              node_span_message.appendChild(textNode_message);
+              //Balise englobant pseudo et message
+              var node = document.createElement("p");
+              node.appendChild(node_span_pseudo);
+              node.appendChild(node_span_message);
+              container_messages.appendChild(node);
+              input_message.value = "";
+            });
+
+            window.addEventListener('keypress', function (e) {
+              if (e.keyCode == 13) {
+                socket.emit('message', input_message.value);
+                var node_span_pseudo = document.createElement("span");
+                let textNode_pseudo = document.createTextNode(pseudo+" : ");
+                node_span_pseudo.style.fontWeight = "bold";
+                node_span_pseudo.appendChild(textNode_pseudo);
+                //message
+                var node_span_message = document.createElement("span");
+                var textNode_message = document.createTextNode(input_message.value);
+                node_span_message.appendChild(textNode_message);
+                //Balise englobant pseudo et message
+                var node = document.createElement("p");
+                node.appendChild(node_span_pseudo);
+                node.appendChild(node_span_message);
+                container_messages.appendChild(node);
+                input_message.value = "";
+              }
+            }, false);
+
+
+        </script>
+    </body>
+</html>
