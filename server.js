@@ -22,7 +22,7 @@ io.on('connection', (socket) => {
   })
   //reception d'un message et diffusion à tous les clients sauf à l'envoyeur
   socket.on('message', (message)=>{
-    socket.broadcast.emit('message', socket.pseudo);
+    socket.broadcast.emit('message', socket.pseudo + ' : ' + msg);
   })
 });
 
