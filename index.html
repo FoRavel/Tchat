@@ -32,6 +32,7 @@
 
 
             //https://frozen-plains-42134.herokuapp.com/
+            //http://localhost:8080
             var socket = io.connect('https://frozen-plains-42134.herokuapp.com/');
 
             var pseudo = prompt("votre pseudo?");
@@ -66,6 +67,7 @@
               node_span_message.appendChild(textNode_message);
               //Balise englobant pseudo et message
               var node = document.createElement("p");
+              node.setAttribute("class", "message");
               node.appendChild(node_span_pseudo);
               node.appendChild(node_span_message);
               container_messages.appendChild(node);
@@ -84,6 +86,7 @@
               node_span_message.appendChild(textNode_message);
               //Balise englobant pseudo et message
               var node = document.createElement("p");
+              node.setAttribute("class", "message");
               node.appendChild(node_span_pseudo);
               node.appendChild(node_span_message);
               container_messages.appendChild(node);
@@ -103,6 +106,7 @@
                 node_span_message.appendChild(textNode_message);
                 //Balise englobant pseudo et message
                 var node = document.createElement("p");
+                node.setAttribute("class", "message");
                 node.appendChild(node_span_pseudo);
                 node.appendChild(node_span_message);
                 container_messages.appendChild(node);
